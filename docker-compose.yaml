@@ -1,0 +1,22 @@
+services:
+  keycloak:
+    image: jboss/keycloak:latest
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: nomoresecret
+      DB_VENDOR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: "nomoresecret"
+      DB_ADDR: "keycloak-database"
+      JAVA_OPTS: "-server -Xms128m -Xmx1024m -XX:MetaspaceSize=128M -XX:MaxMetaspaceSize=512m -Djava.net.preferIPv4Stack=true -Djboss.modules.system.pkgs=org.jboss.byteman -Djava.awt.headless=true"
+    ports:
+      - "8080:8080"  # host:container
+      - "8443:8443"
+
+  keycloak-database:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: nomoresecret
