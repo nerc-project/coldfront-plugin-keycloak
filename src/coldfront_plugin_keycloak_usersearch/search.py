@@ -1,12 +1,13 @@
 from coldfront.core.user.utils import UserSearch
 from coldfront.core.utils.common import import_from_settings
+from coldfront.config.env import ENV
 
 from coldfront_plugin_keycloak_usersearch.keycloak import KeycloakClient
 
-KEYCLOAK_URL = import_from_settings('KEYCLOAK_URL')
-KEYCLOAK_USER = import_from_settings('KEYCLOAK_USER')
-KEYCLOAK_PASS = import_from_settings('KEYCLOAK_PASS')
-KEYCLOAK_REALM = import_from_settings('KEYCLOAK_REALM')
+KEYCLOAK_URL = ENV.get_value('KEYCLOAK_URL')
+KEYCLOAK_USER = ENV.get_value('KEYCLOAK_USER')
+KEYCLOAK_PASS = ENV.get_value('KEYCLOAK_PASS')
+KEYCLOAK_REALM = ENV.get_value('KEYCLOAK_REALM')
 
 KEYCLOAK_CLIENT = None  # type: KeycloakClient
 
