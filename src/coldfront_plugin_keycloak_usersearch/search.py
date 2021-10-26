@@ -27,7 +27,13 @@ class KeycloakUserSearch(UserSearch):
     def search_a_user(self, user_search_string=None, search_by='all_fields'):
         # search_by is in ['all_fields', 'username_only']
 
-        matches = KEYCLOAK_CLIENT.search_username(user_search_string, KEYCLOAK_REALM)
+        if search_by == 'all_fields':
+            matches = KEYCLOAK_CLIENT.search(user_search_string, KEYCLOAK_REALM)
+        elif search_by == 'username_only':
+            matches = KEYCLOAK_CLIENT.search_username(user_search_string, KEYCLOAK_REALM)
+        else:
+            raise ValueError('search_by must be one of all_fields, username_only')
+
         # Filter out all the internal values before passing on the result
         return [
             {

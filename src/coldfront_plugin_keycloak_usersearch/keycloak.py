@@ -43,3 +43,8 @@ class KeycloakClient(object):
         self._admin_auth()
         return self.session.get(self.construct_url(
             realm, f'users?username={username}')).json()
+
+    def search(self, value, realm):
+        self._admin_auth()
+        return self.session.get(self.construct_url(
+            realm, f'users?search={value}')).json()
