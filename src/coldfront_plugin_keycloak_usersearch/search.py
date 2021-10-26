@@ -29,6 +29,13 @@ class KeycloakUserSearch(UserSearch):
 
         matches = KEYCLOAK_CLIENT.search_username(user_search_string, KEYCLOAK_REALM)
         # Filter out all the internal values before passing on the result
-        # since username is all that's parsed
-        # https://github.com/ubccr/coldfront/blob/9e49edd3f37bc32548b3408ea0ff55e03f7369cb/coldfront/core/user/utils.py#L96
-        return [{'username': match['username']} for match in matches]
+        return [
+            {
+                'username': match['username'],
+                'last_name': match.get('lastName', ''),
+                'first_name': match.get('firstName', ''),
+                'email': match.get('email', ''),
+                'source': self.search_source,
+            }
+            for match in matches
+        ]
